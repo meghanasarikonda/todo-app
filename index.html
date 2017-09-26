@@ -9,19 +9,21 @@
   <div id="app">
     <h1>ToDo App</h1>
     <todo-box @todo="addTodo"></todo-box>
-    <todo-list :todos="todos"></todo-list>
+    <todo-list :tod="todos"></todo-list>
   </div>
 
   <script>
 
    Vue.component('todo-list', {
-    props: ['todos'],
-    template: '<ul><li v-for="todo in todos" v-if="todo">{{todo}}</li></ul>'
+    props: ['tod'],
+    template: '<ul><li v-for="todo in tod" v-if="todo" v-on:click="removeTodo">' +
+    '{{todo}}' +
+    '</li></ul>'
    })
 
     Vue.component('todo-box', {
-      template: '<form @submit.prevent="event"> <input type="text" v-model="newTodo">' +
-      '<input type="submit" value="Add" v-on:click=""></form>',
+      template: '<form @submit.prevent="event"> <input type="text" v-model="newTodo" placeholder="type something">' +
+      '<input type="submit" value="Add" v-on:click="removeTodo"></form>',
       data: function() {
         return {
           newTodo: ''
@@ -42,7 +44,11 @@
       },
       methods: {
         addTodo: function(todo) {
-          this.todos.push(todo)
+          this.todos.push(todo);
+        },
+        removeTodo: function(todo) {
+          alert('hi')
+          this.todos.splice(todo, 1);
         }
       }
     });
