@@ -1,27 +1,51 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>My first Vue app</title>
+  <title>ToDo</title>
   <script src="https://unpkg.com/vue"></script>
+
 </head>
 <body>
   <div id="app">
-    <input @keyup.enter="onEnter"/>
-    <p>{{message}}</p>
+    <h1>ToDo App</h1>
+    <todo-box @todo="addTodo"></todo-box>
+    <todo-list :todos="todos"></todo-list>
   </div>
 
   <script>
-    var app = new Vue({
-      el: '#app',
-      data: {
-        message: 'hi'
+
+   Vue.component('todo-list', {
+    props: ['todos'],
+    template: '<ul><li v-for="todo in todos" v-if="todo">{{todo}}</li></ul>'
+   })
+
+    Vue.component('todo-box', {
+      template: '<form @submit.prevent="event"> <input type="text" v-model="newTodo">' +
+      '<input type="submit" value="Add" v-on:click=""></form>',
+      data: function() {
+        return {
+          newTodo: ''
+        }
       },
       methods: {
-        onEnter: function () {
-          this.message = 'changed'
+        event: function() {
+          this.$emit('todo', this.newTodo);
+          this.newTodo = ''
         }
       }
-    })
+    });
+
+    new Vue({
+      el: '#app',
+      data: {
+        'todos': []
+      },
+      methods: {
+        addTodo: function(todo) {
+          this.todos.push(todo)
+        }
+      }
+    });
   </script>
 </body>
 </html>
