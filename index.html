@@ -31,8 +31,8 @@
 
         <input type="checkbox">
         <input type="text">
-        <label>{{todo}}</label>
-        <button>x</button>
+        <label for="checkbox">{{todo.text}}</label>
+        <button @click="removeTodo(todo)">x</button>
 
       </li>
     </ul>
@@ -64,6 +64,10 @@
           this.todos.push({text: todo, checked: false});
           this.newTodo = "";
         }
+      },
+      removeTodo: function(todo) {
+        var index = this.todos.indexOf(todo);
+        this.todos.splice(index, 1)
       }
     }
   });
