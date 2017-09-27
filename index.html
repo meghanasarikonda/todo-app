@@ -31,7 +31,7 @@
 
         <input type="checkbox">
         <input type="text">
-        <label for="checkbox">{{todo.text}}</label>
+        <label for="checkbox" v-if="task !== editingTask" @dblclick="editTask(task)">{{ todo.text }}</label>
         <button @click="removeTodo(todo)">x</button>
 
       </li>
@@ -55,9 +55,14 @@
           text: "Demo todo",
           checked: false
         }
-      ]
+      ],
+
+      editingTask: {
+
+      }
     },
     methods: {
+
       addTodo: function () {
         var todo = this.newTodo.trim();
         if (todo) {
@@ -65,10 +70,17 @@
           this.newTodo = "";
         }
       },
+
       removeTodo: function(todo) {
         var index = this.todos.indexOf(todo);
         this.todos.splice(index, 1)
+      },
+
+      editTask: function (todo) {
+        this.editingTask = todo;
       }
+
+
     }
   });
 
