@@ -19,7 +19,7 @@
   <section class="box">
 
     <input type="checkbox">
-    <input placeholder="enter a task">
+    <input v-model="newTodo" placeholder="enter a task">
     <button>Clear All</button>
 
   </section>
@@ -27,7 +27,7 @@
   <section class="todoList">
 
     <ul>
-      <li>
+      <li v-for="todo in todos">
 
         <input type="checkbox">
         <input type="text">
@@ -49,7 +49,12 @@
     el: "#todo",
 
     data: {
-      newTask: ""
+      newTodo: "",
+      todos: [
+        {
+          text: "Demo todo"
+        }
+      ]
     }
   });
 
