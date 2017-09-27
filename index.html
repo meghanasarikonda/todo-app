@@ -3,27 +3,31 @@
 <head>
   <title>ToDo</title>
   <script src="https://unpkg.com/vue"></script>
+  <script
+  src="https://code.jquery.com/jquery-3.2.1.js"
+  integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+  crossorigin="anonymous"></script>
 
 </head>
 <body>
   <div id="app">
     <h1>ToDo App</h1>
     <todo-box @todo="addTodo"></todo-box>
-    <todo-list :tod="todos"></todo-list>
+    <todo-list :todos="todos"></todo-list>
   </div>
 
   <script>
 
    Vue.component('todo-list', {
-    props: ['tod'],
-    template: '<ul><li v-for="todo in tod" v-if="todo" v-on:click="removeTodo">' +
+    props: ['todos'],
+    template: '<ul><li v-for="todo in todos" v-if="todo">' +
     '{{todo}}' +
     '</li></ul>'
    })
 
     Vue.component('todo-box', {
       template: '<form @submit.prevent="event"> <input type="text" v-model="newTodo" placeholder="type something">' +
-      '<input type="submit" value="Add" v-on:click="removeTodo"></form>',
+      '<input type="submit" value="Add"></form>',
       data: function() {
         return {
           newTodo: ''
@@ -31,6 +35,15 @@
       },
       methods: {
         event: function() {
+          $.ajax({
+            url: 'http://localhost:3000/todo',
+            data: this.newTodo,
+            type: 'POST',
+            success: function (data){
+              console.log(data, 'data');
+            },
+            dataType: ''
+          });
           this.$emit('todo', this.newTodo);
           this.newTodo = ''
         }
@@ -45,10 +58,6 @@
       methods: {
         addTodo: function(todo) {
           this.todos.push(todo);
-        },
-        removeTodo: function(todo) {
-          alert('hi')
-          this.todos.splice(todo, 1);
         }
       }
     });
