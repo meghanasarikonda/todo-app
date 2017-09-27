@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>ToDo</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  <title>To-do List</title>
+
   <script src="https://unpkg.com/vue"></script>
   <script
   src="https://code.jquery.com/jquery-3.2.1.js"
@@ -10,57 +13,46 @@
 
 </head>
 <body>
-  <div id="app">
-    <h1>ToDo App</h1>
-    <todo-box @todo="addTodo"></todo-box>
-    <todo-list :todos="todos"></todo-list>
-  </div>
 
+  <div>
+
+  <section class="box">
+
+    <input type="checkbox">
+    <input placeholder="enter a task">
+    <button>Clear All</button>
+
+  </section>
+
+  <section class="todoList">
+
+    <ul>
+      <li>
+
+        <input type="checkbox">
+        <input type="text">
+        <label>{{todo}}</label>
+
+      </li>
+    </ul>
+
+  </section>
+
+  </div>
   <script>
 
-   Vue.component('todo-list', {
-    props: ['todos'],
-    template: '<ul><li v-for="todo in todos" v-if="todo">' +
-    '{{todo}}' +
-    '</li></ul>'
-   })
+  "use strict";
 
-    Vue.component('todo-box', {
-      template: '<form @submit.prevent="event"> <input type="text" v-model="newTodo" placeholder="type something">' +
-      '<input type="submit" value="Add"></form>',
-      data: function() {
-        return {
-          newTodo: ''
-        }
-      },
-      methods: {
-        event: function() {
-          $.ajax({
-            url: 'http://localhost:3000/todo',
-            data: this.newTodo,
-            type: 'POST',
-            success: function (data){
-              console.log(data, 'data');
-            },
-            dataType: ''
-          });
-          this.$emit('todo', this.newTodo);
-          this.newTodo = ''
-        }
-      }
-    });
+  new Vue({
 
-    new Vue({
-      el: '#app',
-      data: {
-        'todos': []
-      },
-      methods: {
-        addTodo: function(todo) {
-          this.todos.push(todo);
-        }
-      }
-    });
+    el: "#todo",
+
+    data: {
+      newTask: ""
+    }
+  });
+
   </script>
+
 </body>
 </html>
