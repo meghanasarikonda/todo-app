@@ -19,7 +19,7 @@
   <section class="box">
 
     <input type="checkbox">
-    <input v-model="newTodo" placeholder="enter a task">
+    <input v-model="newTodo" @keyup.enter="addTodo" placeholder="enter a task">
     <button>Clear All</button>
 
   </section>
